@@ -1,0 +1,169 @@
+{
+  "id": "property",
+  "label": "Property",
+  "repeatable": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "slug"
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "label": "Description"
+        }
+      },
+      "logo": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [
+            {
+              "name": "square",
+              "width": 300,
+              "height": 300
+            },
+            {
+              "name": "small",
+              "width": 250,
+              "height": 150
+            }
+          ],
+          "label": "Logo"
+        }
+      },
+      "url": {
+        "type": "Link",
+        "config": {
+          "allowTargetBlank": true,
+          "label": "URL",
+          "select": null
+        }
+      },
+      "categories": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "category": {
+              "type": "Link",
+              "config": {
+                "select": "document",
+                "customtypes": [
+                  "category"
+                ],
+                "label": "Category"
+              }
+            }
+          },
+          "label": "Categories"
+        }
+      },
+      "related": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "properties": {
+              "type": "Link",
+              "config": {
+                "select": "document",
+                "customtypes": [
+                  "property"
+                ],
+                "label": "Properties"
+              }
+            },
+            "type": {
+              "type": "Select",
+              "config": {
+                "options": [
+                  "same origin",
+                  "caused by",
+                  "causes"
+                ],
+                "label": "Type"
+              }
+            }
+          },
+          "label": "Related"
+        }
+      }
+    },
+    "Status": {
+      "log": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "status": {
+              "type": "Select",
+              "config": {
+                "options": [
+                  "normal",
+                  "obstructing",
+                  "inaccessible"
+                ],
+                "default_value": "normal",
+                "label": "Status"
+              }
+            },
+            "blocked": {
+              "type": "Timestamp",
+              "config": {
+                "label": "blocked"
+              }
+            },
+            "updated": {
+              "type": "Timestamp",
+              "config": {
+                "label": "updated"
+              }
+            }
+          },
+          "label": "Log"
+        }
+      }
+    },
+    "Impact": {
+      "clientbase": {
+        "type": "Number",
+        "config": {
+          "label": "Client Base"
+        }
+      },
+      "monthly": {
+        "type": "Number",
+        "config": {
+          "label": "Monthly"
+        }
+      },
+      "units": {
+        "type": "Select",
+        "config": {
+          "options": [
+            "active clients",
+            "product items"
+          ],
+          "label": "Units"
+        }
+      }
+    },
+    "Meta": {
+      "origin": {
+        "type": "GeoPoint",
+        "config": {
+          "label": "Origin"
+        }
+      }
+    }
+  },
+  "status": true
+}

@@ -1,27 +1,16 @@
-import Prismic from '@prismicio/client';
-import * as Helpers from '@prismicio/helpers';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { PropertyCard } from '../components/Properties/PropertyCard';
 
-import { getPrismicClient } from '../services/prismic';
+import { getProperties, PropertyInterface } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './index.module.scss';
 
-interface Property {
-  uid?: string;
-  data: {
-    title: string;
-  };
-}
-
-interface PropResponse {
-  results: Property[];
-}
-
 interface IndexProps {
-  properties: PropResponse;
+  properties: PropertyInterface[];
   preview: boolean;
 }
 
@@ -29,19 +18,40 @@ export default function Index({
   properties,
   preview,
 }: IndexProps): JSX.Element {
-  console.log('got props', properties);
+  const [query, setQuery] = useState('');
+
+  const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    setQuery(e.target.value || '');
+  };
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Больше не ...</title>
       </Head>
 
       <main className={commonStyles.container}>
-        <div className={styles.posts}>
-          {properties.map(prop => {
-            console.log(prop.data.title);
-            return Helpers.asHTML(prop.data.title);
-          })}
+        <div className={styles.search}>
+          <input
+            autoFocus
+            autoComplete={'off'}
+            value={query}
+            disabled={true}
+            onChange={onChangeHandler}
+          />
+        </div>
+
+        <div className={styles.properties}>
+          {properties.map(p => (
+            <PropertyCard
+              title={p.title}
+              key={p.uid}
+              log={p.log}
+              logo={p.logo}
+              link={p.link}
+            />
+          ))}
 
           {preview && (
             <aside>
@@ -56,25 +66,12 @@ export default function Index({
   );
 }
 
-export const getStaticProps: GetStaticProps<PropResponse> = async ({
+export const getStaticProps: GetStaticProps<IndexProps> = async ({
   preview = false,
 }) => {
-  const prismic = getPrismicClient();
-
-  const propertiesResponse = await prismic.query(
-    Prismic.predicates.at('document.type', 'property')
-  );
-
-  console.log(propertiesResponse);
-
-  const properties = propertiesResponse.results.map(prop => ({
-    uid: prop.uid,
-    data: { title: prop.data.title },
-  }));
-
   return {
     props: {
-      properties,
+      properties: await getProperties(),
       preview,
     },
   };

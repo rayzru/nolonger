@@ -1,0 +1,9 @@
+{
+  "[scss]": {
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "michelemelluso.code-beautifier",
+    "gitlens.codeLens.scopes": [
+      "document"
+    ]
+  }
+}

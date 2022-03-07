@@ -1,60 +1,23 @@
-.posts {
+.properties {
   margin-top: 2rem;
+}
 
-  > a {
-    display: block;
-  }
-
-  a + a {
-    margin-top: 3rem;
-  }
-
-  button {
-    border: none;
-    background: transparent;
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--highlight);
-    margin-top: 4rem;
+.property {
+  h2 {
+    
   }
 }
 
-.post {
-  strong {
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: var(--heading);
-  }
+.search {
+  position: relative;
+  display: none;
 
-  p {
-    margin-top: 0.5rem;
-    font-size: 1.125rem;
-    color: var(--body);
-  }
+  & input {
+    font-size: 34px;
+    width: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    border-width: 1px;
 
-  ul {
-    list-style: none;
-    margin-top: 1.5rem;
-    display: flex;
-    color: var(--info);
-
-    li {
-      display: flex;
-      align-items: center;
-    }
-
-    & li {
-      span {
-        font-size: 0.775rem;
-      }
-
-      & svg {
-        margin-right: 0.5rem;
-      }
-
-      & + li {
-        margin-left: 1.625rem;
-      }
-    }
   }
 }
