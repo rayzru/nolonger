@@ -10,7 +10,9 @@
     .statuses {
       display: flex;
       flex-flow: row;
+      flex-direction: row-reverse;
       width: 150px;
+      column-gap: 12px;
 
       .status {
         display: flex;
@@ -22,6 +24,7 @@
           text-transform: uppercase;
           font-size: 10px;
           padding: 2px 6px;
+          white-space: nowrap;
           border-radius: 5px;
         }
 
@@ -43,6 +46,31 @@
 
         &.obstructing span {
           background-color: #fcc187;
+        }
+
+        &:last-child.obstructing span {
+          background-color: transparent;
+          background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #fcc187);
+        }
+
+        &:last-child.unspecified span {
+          background-color: transparent;
+          background-image: linear-gradient(to right, rgba(255, 255, 255, 0), #c2c2c2);
+        }
+
+        &:last-child span {
+          opacity: .2;
+          margin-right: 10px;
+
+
+          &::after {
+            position: absolute;
+            font-size: 15px;
+            opacity: .3;
+            margin-top: -3px;
+            margin-left: 10px;
+            content: '\2192';
+          }
         }
 
       }

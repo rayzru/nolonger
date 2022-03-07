@@ -12,10 +12,10 @@ export const PropertyCard: React.FC<PropertyInterface> = ({
   log,
 }) => {
   const statuses: Record<PropertyLogStatusType, string> = {
-    unspecified: 'Не указано',
+    unspecified: '...',
     normal: 'Работает',
     inaccessible: 'Недоступно',
-    obstructing: 'Проблематично',
+    obstructing: 'Проблемно',
   };
 
   const renderStatus = (log: PropertyLogInterface) => {
@@ -39,11 +39,18 @@ export const PropertyCard: React.FC<PropertyInterface> = ({
     );
   };
 
+  const theLog =
+    log.length > 1
+      ? log.slice(0, 2)
+      : log.push({
+          status: 'unspecified',
+          reason: undefined,
+          source: undefined,
+        });
+
   return (
     <article className={styles.propertyCard} title={title}>
-      <div className="statuses">
-        {log && log.slice(0, 2).map(l => renderStatus(l))}
-      </div>
+      <div className="statuses">{log.map(l => renderStatus(l))}</div>
       <div className="logo" style={{ backgroundImage: `url(${logo})` }} />
       <h2>{title}</h2>
     </article>
