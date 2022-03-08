@@ -34,7 +34,6 @@ export default function Index({
       <main className={commonStyles.container}>
         <div className={styles.search}>
           <input
-            autoFocus
             autoComplete={'off'}
             value={query}
             disabled={true}
