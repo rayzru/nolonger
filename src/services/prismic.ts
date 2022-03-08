@@ -73,14 +73,14 @@ export const getProperties = async (q?: string) => {
     return {
       uid: prop.uid,
       title: prop.data.title,
-      logo: prop.data.logo.square.url,
-      link: prop.data.link.url,
+      logo: prop.data.logo?.square?.url || null,
+      link: prop.data.link?.url || null,
       log: prop.data.log.map(l => ({
         status: l?.status || 'normal',
         blocked: new Date(l?.blocked).toISOString() || null,
         updated: new Date(l?.updated).toISOString() || null,
         reason: l?.reason,
-        source: l?.source?.url || '',
+        source: l?.source?.url || null,
       })),
     };
   });
