@@ -1,9 +1,9 @@
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import { PropertyCard } from '../components/Properties/PropertyCard';
 
+import { PropertyCard } from '../components/Properties/PropertyCard';
 import { getProperties, PropertyInterface } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';

@@ -1,10 +1,10 @@
 import Prismic from '@prismicio/client';
-import { Document } from '@prismicio/client';
+import { PrismicDocument } from '@prismicio/types';
 
 const apiEndpoint = process.env.PRISMIC_API_ENDPOINT;
 const accessToken = process.env.PRISMIC_ACESS_TROKEN;
 
-function linkResolver(doc: Document): string {
+function linkResolver(doc: PrismicDocument): string {
   if (doc.type === 'posts') {
     return `/post/${doc.uid}`;
   }

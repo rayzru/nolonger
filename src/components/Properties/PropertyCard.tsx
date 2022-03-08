@@ -1,9 +1,11 @@
 import React from 'react';
+
 import {
   PropertyInterface,
   PropertyLogInterface,
   PropertyLogStatusType,
 } from '../../services/prismic';
+
 import styles from './propertyCard.module.scss';
 
 export const PropertyCard: React.FC<PropertyInterface> = ({
@@ -39,14 +41,11 @@ export const PropertyCard: React.FC<PropertyInterface> = ({
     );
   };
 
-  const theLog =
-    log.length > 1
-      ? log.slice(0, 2)
-      : log.push({
-          status: 'unspecified',
-          reason: undefined,
-          source: undefined,
-        });
+  if (log.length > 1) {
+    log = log.slice(0, 2);
+  } else {
+    log.push({ status: 'unspecified', reason: undefined, source: undefined });
+  }
 
   return (
     <article className={styles.propertyCard} title={title}>
