@@ -32,6 +32,12 @@
   ],
   "rules": {
     "camelcase": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",

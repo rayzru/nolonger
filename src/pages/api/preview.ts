@@ -1,42 +1,18 @@
-import Prismic from '@prismicio/client';
-import { PrismicDocument } from '@prismicio/types';
-
-const apiEndpoint = process.env.PRISMIC_API_ENDPOINT;
-const accessToken = process.env.PRISMIC_ACESS_TROKEN;
-
-function linkResolver(doc: PrismicDocument): string {
-  if (doc.type === 'posts') {
-    return `/post/${doc.uid}`;
-  }
-  return '/';
-}
-
-const Client = (req = null) =>
-  Prismic.client(apiEndpoint, createClientOptions(req, accessToken));
-
-const createClientOptions = (req = null, prismicAccessToken = null) => {
-  const reqOption = req ? { req } : {};
-  const accessTokenOption = prismicAccessToken
-    ? { accessToken: prismicAccessToken }
-    : {};
-  return {
-    ...reqOption,
-    ...accessTokenOption,
-  };
-};
+import { linkResolver, prismicClient } from '../../services/prismic';
 
 const Preview = async (req, res) => {
-  const { token: ref, documentId } = req.query;
-  const redirectUrl = await Client(req)
-    .getPreviewResolver(ref, documentId)
-    .resolve(linkResolver, '/');
+  const { token: ref } = req.query;
+  const previewURL = await prismicClient(req).resolvePreviewURL({
+    linkResolver,
+    defaultURL: '/',
+  });
 
-  if (!redirectUrl) {
+  if (!previewURL) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
   res.setPreviewData({ ref });
-  res.writeHead(302, { Location: `${redirectUrl}` });
+  res.writeHead(302, { Location: `${previewURL}` });
   res.end();
 };
 

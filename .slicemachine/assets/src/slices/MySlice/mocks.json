@@ -1,0 +1,24 @@
+[
+  {
+    "variation": "default",
+    "name": "Default",
+    "slice_type": "my_slice",
+    "items": [],
+    "primary": {
+      "title": [
+        {
+          "type": "heading1",
+          "text": "Expedite wireless metrics",
+          "spans": []
+        }
+      ],
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "Ipsum deserunt nisi occaecat officia in tempor sit voluptate dolore exercitation ad. Exercitation commodo consectetur dolor et irure et magna aute anim.",
+          "spans": []
+        }
+      ]
+    }
+  }
+]

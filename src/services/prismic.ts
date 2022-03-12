@@ -1,6 +1,5 @@
-import Prismic from '@prismicio/client';
-import { DefaultClient } from '@prismicio/client/types/client';
-import * as pHelpers from '@prismicio/helpers';
+import * as prismic from '@prismicio/client';
+import { Element, LinkResolverFunction } from '@prismicio/helpers';
 import {
   CustomTypeModelGroupField,
   DateField,
@@ -11,16 +10,31 @@ import {
   SelectField,
 } from '@prismicio/types';
 
-const Elements = pHelpers.Element;
+const apiEndpoint = prismic.getRepositoryEndpoint(
+  process.env.PRISMIC_REPO || 'nolonger'
+);
+const accessToken = process.env.PRISMIC_ACESS_TROKEN;
 
-export function getPrismicClient(req?: unknown): DefaultClient {
-  const apiEndpoint = process.env.PRISMIC_API_ENDPOINT;
-  const accessToken = process.env.PRISMIC_ACESS_TROKEN;
-  return Prismic.client(apiEndpoint, { req, accessToken });
-}
+export const linkResolver: LinkResolverFunction<string> = doc => {
+  if (doc.type === 'property') {
+    return `/property/${doc.uid}`;
+  }
+  return '/';
+};
 
-export const linkResolver = document => `/${document.data?.uid || ''}`;
+export const prismicClient = (req = null) =>
+  prismic.createClient(apiEndpoint, createClientOptions(req, accessToken));
 
+const createClientOptions = (req = null, prismicAccessToken = null) => {
+  const reqOption = req ? { req } : {};
+  const accessTokenOption = prismicAccessToken
+    ? { accessToken: prismicAccessToken }
+    : {};
+  return {
+    ...reqOption,
+    ...accessTokenOption,
+  };
+};
 export type PropertyLogStatusType =
   | 'inaccessible'
   | 'obstructing'
@@ -62,14 +76,11 @@ interface PrismicProperty extends PrismicDocument {
 }
 
 export const getProperties = async (q?: string) => {
-  const prismic = getPrismicClient();
+  const client = prismicClient();
 
-  const propertiesResponse = await prismic.query<PrismicProperty>(
-    Prismic.predicates.at('document.type', 'property')
-  );
-
-  const properties = propertiesResponse.results.map(prop => {
-    console.log(prop.data.log);
+  const propertiesResponse = await client.getAllByType('property');
+  console.log(propertiesResponse);
+  const properties = propertiesResponse.map(prop => {
     return {
       uid: prop.uid,
       title: prop.data.title,

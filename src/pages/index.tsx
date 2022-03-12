@@ -44,8 +44,8 @@ export default function Index({
         <div className={styles.properties}>
           {properties.map(p => (
             <PropertyCard
-              title={p.title}
               key={p.uid}
+              title={p.title}
               log={p.log}
               logo={p.logo}
               link={p.link}
